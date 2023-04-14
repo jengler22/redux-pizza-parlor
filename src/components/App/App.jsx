@@ -3,7 +3,7 @@ import axios from 'axios';
 import './App.css';
 import { HashRouter  as Router, Route, Link } from 'react-router-dom';
 import Header from '../Header/Header.jsx';
-import PizzaList from '../PizzaList/PizzaList.jsx';
+import Pizzas from '../Pizzas/Pizzas.jsx';
 import CustomerForm from '../CustomerForm/CustomerForm.jsx';
 import Checkout from'../Checkout/Checkout.jsx';
 import Admin from '../Admin/Admin.jsx';
@@ -16,7 +16,7 @@ function App() {
       <Router>
         <Header />
         <Route exact path="/">
-          <PizzaList />
+          <Pizzas />
         </Route>
         <Route exact path="/customer-form">
           <CustomerForm />

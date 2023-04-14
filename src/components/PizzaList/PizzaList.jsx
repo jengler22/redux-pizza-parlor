@@ -8,7 +8,7 @@ function PizzaList () {
     const pizzas = useSelector(store => store.pizzas);
 
     return(
-        <div>
+        <div className="pizza-page">
             <ul>
                 {pizzas.map((pizza, i) => {
                     return <PizzaItem key={i} pizza={pizza} />;
