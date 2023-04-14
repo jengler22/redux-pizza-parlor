@@ -78,6 +78,14 @@ const cart = (state = [], action) => {
 }
 
 //! end reducers
+//! Oopsies. I forgot to add reducers for pizzas
+
+const pizzas = (state = [], action) => {
+    if (action.type === 'SET_PIZZAS') {
+        return action.payload;
+    }
+    return state;
+}
 
 const storeInstance = createStore(
     combineReducers(
@@ -89,6 +97,8 @@ const storeInstance = createStore(
             orderType,
             cartTotal,
             cart,
+            // ! Added - gd
+            pizzas,
             // Reducers will go here
         }
     )
