@@ -77,6 +77,13 @@ const cart = (state = [], action) => {
     return state;
 }
 
+const customerInfo = (state = [],  action) => {
+    if (action.type === 'SET_CUSTOMER_INFO') {
+        return action.payload;
+    }
+    return state;
+}
+
 //! end reducers
 
 const storeInstance = createStore(
@@ -90,6 +97,7 @@ const storeInstance = createStore(
             cartTotal,
             cart,
             // Reducers will go here
+            customerInfo,
         }
     )
 
