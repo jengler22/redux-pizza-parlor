@@ -1,10 +1,22 @@
 import { useEffect } from 'react';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PizzaList from '../PizzaList/PizzaList.jsx';
+import { useHistory } from 'react-router-dom';
 
 function Pizzas() {
   const dispatch = useDispatch();
+  const cartTotal = useSelector(store => store.cartTotal);
+  const history = useHistory();
+
+  const nextPage = () => {
+    if (cartTotal === 0 ) {
+      alert(`Please select a Pizza! :D`)
+      return;
+    } else {
+      history.push('/customer-form')
+    }
+  }
 
   useEffect(() => {
     fetchPizzas();
@@ -25,6 +37,7 @@ function Pizzas() {
     <div>
       <h2> Lookit them Pizzas! </h2>
       <PizzaList />
+      <button onClick={nextPage}>Next Page</button>
     </div>
   )
 }
