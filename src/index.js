@@ -77,6 +77,13 @@ const cart = (state = [], action) => {
     return state;
 }
 
+const customerInfo = (state = [],  action) => {
+    if (action.type === 'SET_CUSTOMER_INFO') {
+        return action.payload;
+    }
+    return state;
+}
+
 //! end reducers
 //! Oopsies. I forgot to add reducers for pizzas
 
@@ -100,6 +107,7 @@ const storeInstance = createStore(
             // ! Added - gd
             pizzas,
             // Reducers will go here
+            customerInfo,
         }
     )
 
