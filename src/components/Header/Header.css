@@ -1,0 +1,17 @@
+.App-header {
+    background-color: #222;
+    height: 80px;
+    padding: 20px;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.App-title {
+    float: left;
+    font-size: 2em;
+}
+
+.cart-total {
+    padding-top: 70px;
+    float: right;
+}
