@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
 import './CustomerForm.css'
 
@@ -6,10 +6,13 @@ function CustomerForm () {
 
     const history = useHistory();
     const dispatch = useDispatch();
+    const orderType = useSelector(store => store.orderType);
 
     // Set order type
-    const setOrderType = () => {
-        const action = { type: 'SET_ORDER_TYPE',  }
+    const setOrderType = (event) => {
+        const action = { type: 'SET_ORDER_TYPE', payload: event.target.value }
+        dispatch(action);
+        console.log(event.target.value);
     }
 
     // ---------- Start handle on change ----------
@@ -36,7 +39,11 @@ function CustomerForm () {
 
     // To next page '/checkout'
     const nextPage = () => {
-        history.push('/checkout');
+        if ( orderType === '' ) {
+            alert('Please select an order type');
+        } else {
+            history.push('/checkout');
+        }
     }
 
     return(
@@ -58,13 +65,13 @@ function CustomerForm () {
             </div>
             <div className="radioButtons">       
                 <label>
-                <input type="radio" name="orderType" value="pickup" required />   
+                <input onClick={setOrderType} type="radio" name="orderType" value="pickup" required />   
                     Pickup
                 </label>
                 <br />
                 <br />
                 <label>
-                <input type="radio" name="orderType" value="delivery" />                   
+                <input onClick={setOrderType} type="radio" name="orderType" value="delivery" />                   
                     Delivery
                 </label>   
                 <br />
