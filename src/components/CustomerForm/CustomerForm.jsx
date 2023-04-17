@@ -15,14 +15,15 @@ function CustomerForm () {
     const orderType = useSelector(store => store.orderType);
     const cartTotal = useSelector(store => store.cartTotal);
 
+    // TODO: MOVE POST REQUEST TO CHECKOUT
     const sendToServer = () => {
-        axios.post('/orders', {
+        axios.post('/api/order', {
             customer_name: personName,
             street_address: streetAddress,
             city: city,
             zip: zip,
             type: orderType,
-            total: cartTotal
+            total: cartTotal        
         }).then(response => {
             dispatch({ type: 'CLEAR_FORM' });
             history.push('/checkout')
