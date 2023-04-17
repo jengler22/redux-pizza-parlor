@@ -8,7 +8,8 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import logger from 'redux-logger';
 import { Provider } from 'react-redux';
 
-// TODO Reducers to make
+// ----------- start reducers -----------
+
 // Customer Name
 const personName = (state = '', action) => {
     if (action.type === 'SET_PERSON_NAME') {
@@ -62,7 +63,7 @@ const orderType = (state = '', action) => {
 // Cart Total
 const cartTotal = (state = 0, action) => {
     if (action.type === 'SET_CART_TOTAL') {
-        return action.payload
+        return state + action.payload;
     }
     return state;
 }
@@ -77,6 +78,7 @@ const cart = (state = [], action) => {
     return state;
 }
 
+// Customer Info
 const customerInfo = (state = [],  action) => {
     if (action.type === 'SET_CUSTOMER_INFO') {
         return action.payload;
@@ -84,9 +86,7 @@ const customerInfo = (state = [],  action) => {
     return state;
 }
 
-//! end reducers
-//! Oopsies. I forgot to add reducers for pizzas
-
+// Pizza Menu
 const pizzas = (state = [], action) => {
     if (action.type === 'SET_PIZZAS') {
         return action.payload;
@@ -94,6 +94,9 @@ const pizzas = (state = [], action) => {
     return state;
 }
 
+// ----------- end reducers -----------
+
+// Store
 const storeInstance = createStore(
     combineReducers(
         {
@@ -104,13 +107,11 @@ const storeInstance = createStore(
             orderType,
             cartTotal,
             cart,
-            // ! Added - gd
             pizzas,
-            // Reducers will go here
             customerInfo,
         }
-    )
-
+    ),
+    applyMiddleware(logger)
 )
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

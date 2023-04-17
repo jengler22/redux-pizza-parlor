@@ -1,54 +1,66 @@
-import { useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { useEffect } from "react";
 import axios from "axios";
 
-function Checkout () {
+function Checkout() {
     const dispatch = useDispatch();
+    // customerInfo will be displayed top left
     const customerInfo = useSelector(store => store.customerInfo);
-    // const history = useHistory();
-    // const personName = useSelector(store => store.personName);
-    // const streetAddress = useSelector(store => store.City);
-    // const City = useSelector(store => store.minutes);
-    // const Zip = useSelector(store => store.Zip);
-    // const orderType = useSelector(store => store.orderType);
-    // const cartTotal = useSelector(store => store.cartTotal);
-   // const Cart = useSelector(store => store.Cart);
 
-   useEffect(() => {
-    fetchCustomerInfo
-}, []);
+    useEffect(() => {
+        fetchCustomerInfo
+    }, []);
 
-    
-   const fetchCustomerInfo = () => {
-    axios.get('/api/order').then(response => {
-                           //SET_CUSTOMER_INFO   '/api/order'
-        dispatch({ type: 'SET_CUSTOMER_INFO', payload: response.data});
+    const personName = useSelector(store => store.personName);
+    const streetAddress = useSelector(store => store.streetAddress);
+    const city = useSelector(store => store.city);
+    const zip = useSelector(store => store.zip)
+    const orderType = useSelector(store => store.orderType);
+    const cartTotal = useSelector(store => store.cartTotal);
 
-    }).catch(error => {
-        alert('something went wrong')
-    });
-}
+    const sendToServer = () => {
+        axios.post('/orders', {
+            customer_name: personName,
+            street_address: streetAddress,
+            city: city,
+            zip: zip,
+            type: orderType,
+            total: cartTotal
+        }).then(response => {
+            dispatch({ type: 'CLEAR_FORM' });
+            history.push('/checkout')
+        }).catch(error => {
+            alert('Something went wrong!');
+            console.log(error);
+        });
+    }
 
 
-    return(
+    const fetchCustomerInfo = () => {
+        axios.get('/api/order').then(response => {
+            //SET_CUSTOMER_INFO   '/api/order'
+            dispatch({ type: 'SET_CUSTOMER_INFO', payload: response.data });
+
+        }).catch(error => {
+            alert('something went wrong')
+        });
+    }
+
+
+    return (
         <>
-        <h3>List</h3>
-        {
-            // customerInfo.map(order => (
-                <div key={order.id}>
-                    <p>Name: {order.personName}</p>
-                    <p>Address: {order.streetAddress} </p>
-                    <p>City: {order.city} </p>
-                    <p>Zip: {order.zip} </p>
-                    <p>Type: {order.orderType}</p>
-                    <p>Total: {order.cartTotal} </p>
-                    <button>Checkout</button>
-                    <hr />
+            <h3>List</h3>
+                <div>
+                    <p>Name: {personName}</p>
+                    <p>Address: {streetAddress} </p>
+                    <p>City: {city} </p>
+                    <p>Zip: {zip} </p>
+                    <p>Type: {orderType}</p>
+                    <p>Total: {cartTotal} </p>
+                    <button onClick={sendToServer}>Checkout</button>
                 </div>
-    // ))
-        }
         </>
     )
 }

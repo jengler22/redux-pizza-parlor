@@ -1,6 +1,5 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
 import './CustomerForm.css'
 
 function CustomerForm () {
@@ -8,28 +7,36 @@ function CustomerForm () {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const personName = useSelector(store => store.personName);
-    const streetAddress = useSelector(store => store.streetAddress);
-    const city = useSelector(store => store.city);
-    const zip = useSelector(store => store.zip)
-    const orderType = useSelector(store => store.orderType);
-    const cartTotal = useSelector(store => store.cartTotal);
+    // Set order type
+    const setOrderType = () => {
+        const action = { type: 'SET_ORDER_TYPE',  }
+    }
 
-    const sendToServer = () => {
-        axios.post('/orders', {
-            customer_name: personName,
-            street_address: streetAddress,
-            city: city,
-            zip: zip,
-            type: orderType,
-            total: cartTotal
-        }).then(response => {
-            dispatch({ type: 'CLEAR_FORM' });
-            history.push('/checkout')
-        }).catch(error => {
-            alert('Something went wrong!');
-            console.log(error);
-        })
+    // ---------- Start handle on change ----------
+    const handleChangeName = (event) => {
+        const action = { type: 'SET_PERSON_NAME', payload: event.target.value }
+        dispatch(action);
+    }
+
+    const handleChangeAddress = (event) => {
+        const action = { type: 'SET_ADDRESS', payload: event.target.value }
+        dispatch(action);
+    }
+
+    const handleChangeCity = (event) => {
+        const action = { type: 'SET_CITY', payload: event.target.value }
+        dispatch(action);
+    }
+
+    const handleChangeZip = (event) => {
+        const action = { type: 'SET_ZIP', payload: event.target.value }
+        dispatch(action);
+    }
+    // ---------- End handle on change ----------
+
+    // To next page '/checkout'
+    const nextPage = () => {
+        history.push('/checkout');
     }
 
     return(
@@ -37,16 +44,16 @@ function CustomerForm () {
             <div className="infoForm">
                 <h3>Customer Information</h3>
                 <form>
-                    <input type="text" defaultValue="Name" required />
+                    <input onChange={handleChangeName} type="text" placeholder="Name" required />
                     <br />
                     <br />
-                    <input type="text" defaultValue="Street Address" required />
+                    <input onChange={handleChangeAddress} type="text" placeholder="Street Address" required />
                     <br />
                     <br />
-                    <input type="text" defaultValue="City" required />
+                    <input onChange={handleChangeCity} type="text" placeholder="City" required />
                     <br />
                     <br />
-                    <input type="text" defaultValue="Zip" required />
+                    <input onChange={handleChangeZip} type="text" placeholder="Zip" required />
                 </form>
             </div>
             <div className="radioButtons">       
@@ -64,7 +71,7 @@ function CustomerForm () {
                 <br />
                 <br />
                 <br />
-                <button  onClick={sendToServer}>Next</button>           
+                <button  onClick={nextPage}>Next</button>           
             </div>
 
         </div>

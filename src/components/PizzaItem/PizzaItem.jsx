@@ -5,12 +5,21 @@ import './PizzaItem.css';
 function PizzaItem ({pizza}) {
     const dispatch = useDispatch();
     const cart = useSelector(store => store.cart);
+    const cartTotal = useSelector(store => store.cartTotal);
+
+    let totalPrice = 0;
 
     const addPizzaToCart = () => {
-        dispatch({ type: 'ADD_TO_CART', payload: pizza})
-        console.log(cart);
+        totalPrice += pizza.price
+        dispatch({ type: 'ADD_TO_CART', payload: pizza});
+        console.log(cart, cartTotal, totalPrice);
+        findTotal();
     };
 
+    const findTotal = () => {
+        const action = { type: 'SET_CART_TOTAL', payload: Number(totalPrice) }
+        dispatch(action);
+    }
     
     return(
         <li className="pizza-item" >
