@@ -19,18 +19,21 @@ function Checkout() {
     const zip = useSelector(store => store.zip)
     const orderType = useSelector(store => store.orderType);
     const cartTotal = useSelector(store => store.cartTotal);
+    const cart = useSelector(store => store.cart)
 
     const sendToServer = () => {
-        axios.post('/orders', {
+        axios.post('/api/order', {
             customer_name: personName,
             street_address: streetAddress,
             city: city,
             zip: zip,
             type: orderType,
-            total: cartTotal
+            total: cartTotal,
+            pizzas: cart
         }).then(response => {
             dispatch({ type: 'CLEAR_FORM' });
-            history.push('/checkout')
+            history.push('/')
+            console.log( personName, streetAddress, city, zip, orderType, cartTotal )
         }).catch(error => {
             alert('Something went wrong!');
             console.log(error);
@@ -51,6 +54,8 @@ function Checkout() {
 
     return (
         <>
+            {/* TODO: Add customer information top left */}
+
             <h3>List</h3>
                 <div>
                     <p>Name: {personName}</p>

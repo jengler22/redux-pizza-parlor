@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
 import './CustomerForm.css'
 
-function CustomerForm () {
+function CustomerForm() {
 
     const history = useHistory();
     const dispatch = useDispatch();
@@ -39,48 +39,35 @@ function CustomerForm () {
 
     // To next page '/checkout'
     const nextPage = () => {
-        if ( orderType === '' ) {
-            alert('Please select an order type');
-        } else {
             history.push('/checkout');
         }
-    }
 
-    return(
+    return (
         <div className="customerForm">
-            <div className="infoForm">
                 <h3>Customer Information</h3>
-                <form>
+                <form onSubmit={nextPage}>
                     <input onChange={handleChangeName} type="text" placeholder="Name" required />
-                    <br />
-                    <br />
+                        <br /><br />
                     <input onChange={handleChangeAddress} type="text" placeholder="Street Address" required />
-                    <br />
-                    <br />
+                        <br /><br />
                     <input onChange={handleChangeCity} type="text" placeholder="City" required />
-                    <br />
-                    <br />
+                        <br /><br />
                     <input onChange={handleChangeZip} type="text" placeholder="Zip" required />
+                        <br /><br />
+                    <div className="radioButtons">
+                        <label>
+                            <input onClick={setOrderType} type="radio" name="orderType" value="pickup" required />
+                            Pickup
+                        </label>
+                            <br /><br />
+                        <label>
+                            <input onClick={setOrderType} type="radio" name="orderType" value="delivery" />
+                            Delivery
+                        </label>
+                            <br /><br />
+                            <input type="submit" />
+                    </div>
                 </form>
-            </div>
-            <div className="radioButtons">       
-                <label>
-                <input onClick={setOrderType} type="radio" name="orderType" value="pickup" required />   
-                    Pickup
-                </label>
-                <br />
-                <br />
-                <label>
-                <input onClick={setOrderType} type="radio" name="orderType" value="delivery" />                   
-                    Delivery
-                </label>   
-                <br />
-                <br />
-                <br />
-                <br />
-                <button  onClick={nextPage}>Next</button>           
-            </div>
-
         </div>
     )
 }
