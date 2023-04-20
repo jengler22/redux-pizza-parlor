@@ -8,6 +8,7 @@ function Checkout() {
     const dispatch = useDispatch();
     // customerInfo will be displayed top left
     const customerInfo = useSelector(store => store.customerInfo);
+    const history = useHistory();
 
     useEffect(() => {
         fetchCustomerInfo
@@ -20,6 +21,7 @@ function Checkout() {
     const orderType = useSelector(store => store.orderType);
     const cartTotal = useSelector(store => store.cartTotal);
     const cart = useSelector(store => store.cart)
+    
 
     const sendToServer = () => {
         axios.post('/api/order', {
@@ -38,6 +40,8 @@ function Checkout() {
             alert('Something went wrong!');
             console.log(error);
         });
+
+    
     }
 
 

@@ -38,7 +38,8 @@ function CustomerForm() {
     // ---------- End handle on change ----------
 
     // To next page '/checkout'
-    const nextPage = () => {
+    const nextPage = (event) => {
+        event.preventDefault();
             history.push('/checkout');
         }
 

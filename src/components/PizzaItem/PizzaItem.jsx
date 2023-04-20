@@ -11,6 +11,8 @@ function PizzaItem ({pizza}) {
 
     const addPizzaToCart = () => {
         totalPrice += pizza.price
+        pizza.quantity = 1
+        
         dispatch({ type: 'ADD_TO_CART', payload: pizza});
         console.log(cart, cartTotal, totalPrice);
         findTotal();
