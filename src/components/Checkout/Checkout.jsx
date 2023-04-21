@@ -34,6 +34,8 @@ function Checkout() {
             pizzas: cart
         }).then(response => {
             dispatch({ type: 'CLEAR_FORM' });
+            dispatch({ type: 'CLEAR_CART' });
+            dispatch({ type: 'CLEAR_CART_TOTAL' });
             history.push('/')
             console.log( personName, streetAddress, city, zip, orderType, cartTotal )
         }).catch(error => {
@@ -59,8 +61,9 @@ function Checkout() {
     return (
         <>
             {/* TODO: Add customer information top left */}
-
-            <h3>List</h3>
+            
+            <h3>Customer Info/Review</h3>
+       
                 <div>
                     <p>Name: {personName}</p>
                     <p>Address: {streetAddress} </p>
@@ -69,6 +72,15 @@ function Checkout() {
                     <p>Type: {orderType}</p>
                     <p>Total: {cartTotal} </p>
                     <button onClick={sendToServer}>Checkout</button>
+                </div>
+                <div>
+                    <ul>
+                        { cart.map(item => (
+                            <li key={item.id}>
+                                {item.name} - {item.price}
+                            </li>
+                        ))}
+                    </ul>
                 </div>
         </>
     )

@@ -64,6 +64,8 @@ const orderType = (state = '', action) => {
 const cartTotal = (state = 0, action) => {
     if (action.type === 'SET_CART_TOTAL') {
         return state + action.payload;
+    } else if (action.type === 'CLEAR_CART_TOTAL') {
+        return 0;
     }
     return state;
 }
